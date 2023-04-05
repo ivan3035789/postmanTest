@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "e5fb9ce2-88f9-4477-853a-877c9b90b5e3",
+		"_postman_id": "9e7361d6-0c40-45f6-9228-03bf71868852",
 		"name": "Пользователь",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15277162"
 	},
 	"item": [
 		{
-			"name": "создает список пользователей с заданным входным массивом",
+			"name": "создать пользователя",
 			"event": [
 				{
 					"listen": "test",
@@ -21,14 +21,15 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
+							"pm.test(\"тело ответа имеет данные code, tupe, message\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
+							"    pm.expect(jsonData.message).to.eql(\"894307801\");      \r",
 							"});\r",
 							""
 						],
@@ -41,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"id\": 89430780,\r\n    \"username\": \"Gena\",\r\n    \"firstName\": \"Genadiy\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"email\": \"Genadiy@rambler.ru\",\r\n    \"password\": \"0000\",\r\n    \"phone\": \"83332222222\",\r\n    \"userStatus\": 1\r\n  }\r\n]\r\n\r\n",
+					"raw": "{\r\n  \"id\": 894307801,\r\n  \"username\": \"Genka\",\r\n  \"firstName\": \"Genadiy\",\r\n  \"lastName\": \"Ivanov\",\r\n  \"email\": \"Genadiy@rambler.ru\",\r\n  \"password\": \"0000\",\r\n  \"phone\": \"83332222222\",\r\n  \"userStatus\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,7 +50,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/createWithArray",
+					"raw": "https://petstore.swagger.io/v2/user",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -58,15 +59,14 @@
 					],
 					"path": [
 						"v2",
-						"user",
-						"createWithArray"
+						"user"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "создает список пользователей с заданным входным массивом",
+			"name": "должен выдавать данные по имени пользователя",
 			"event": [
 				{
 					"listen": "test",
@@ -80,67 +80,14 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"id\": 89430780,\r\n    \"username\": \"Gena\",\r\n    \"firstName\": \"Genadiy\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"email\": \"Genadiy@rambler.ru\",\r\n    \"password\": \"0000\",\r\n    \"phone\": \"83332222222\",\r\n    \"userStatus\": 1\r\n  }\r\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/createWithList",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user",
-						"createWithList"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "получение пользователя по имени пользователя",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
 							"pm.test(\"пользователь имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id).to.eql(89430780);\r",
+							"    pm.expect(jsonData.id).to.eql(894307801);\r",
 							"    pm.expect(jsonData.username).to.eql(\"Genka\");\r",
 							"    pm.expect(jsonData.firstName).to.eql(\"Genadiy\");\r",
 							"    pm.expect(jsonData.lastName).to.eql(\"Ivanov\");\r",
@@ -149,6 +96,8 @@
 							"    pm.expect(jsonData.phone).to.eql(\"83332222222\");\r",
 							"    pm.expect(jsonData.userStatus).to.eql(1);\r",
 							"});\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -159,7 +108,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Gena",
+					"raw": "https://petstore.swagger.io/v2/user/Genka",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -169,14 +118,14 @@
 					"path": [
 						"v2",
 						"user",
-						"Gena"
+						"Genka"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "обновление данных пользователя",
+			"name": "должен войти в систему",
 			"event": [
 				{
 					"listen": "test",
@@ -190,139 +139,14 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"89430780\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет данные\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id).to.eql(89430780);\r",
-							"    pm.expect(jsonData.username).to.eql(\"Gena1\");\r",
-							"    pm.expect(jsonData.firstName).to.eql(\"Genadiy\");\r",
-							"    pm.expect(jsonData.lastName).to.eql(\"Ivanov\");\r",
-							"    pm.expect(jsonData.email).to.eql(\"Genadiy@rambler.ru\");\r",
-							"    pm.expect(jsonData.password).to.eql(\"0000\");\r",
-							"    pm.expect(jsonData.phone).to.eql(\"84442222222\");\r",
-							"    pm.expect(jsonData.userStatus).to.eql(1);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"id\": 89430780,\r\n  \"username\": \"Gena\",\r\n  \"firstName\": \"Genadiy\",\r\n  \"lastName\": \"Ivanov\",\r\n  \"email\": \"Genadiy@rambler.ru\",\r\n  \"password\": \"0000\",\r\n  \"phone\": \"84442222222\",\r\n  \"userStatus\": 1\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Gena",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user",
-						"Gena"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "удаление пользователя",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
 							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"Gena\");\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/8943078000?username=Genka",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user",
-						"8943078000"
-					],
-					"query": [
-						{
-							"key": "username",
-							"value": "Genka"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "вход пользователя в систему",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"logged in user session:1680608098431\");\r",
 							"});\r",
 							"\r",
 							""
@@ -331,8 +155,11 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -371,7 +198,7 @@
 			"response": []
 		},
 		{
-			"name": "создать пользователя",
+			"name": "должен выйти из системы",
 			"event": [
 				{
 					"listen": "test",
@@ -385,72 +212,14 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет данные\", function () {\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id).to.eql(89430780);\r",
-							"    pm.expect(jsonData.username).to.eql(\"Gena\");\r",
-							"    pm.expect(jsonData.firstName).to.eql(\"Genadiy\");\r",
-							"    pm.expect(jsonData.lastName).to.eql(\"Ivanov\");\r",
-							"    pm.expect(jsonData.email).to.eql(\"Genadiy@rambler.ru\");\r",
-							"    pm.expect(jsonData.password).to.eql(\"0000\");\r",
-							"    pm.expect(jsonData.phone).to.eql(\"83332222222\");\r",
-							"    pm.expect(jsonData.userStatus).to.eql(1);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"id\": 89430780,\r\n  \"username\": \"Genka\",\r\n  \"firstName\": \"Genadiy\",\r\n  \"lastName\": \"Ivanov\",\r\n  \"email\": \"Genadiy@rambler.ru\",\r\n  \"password\": \"0000\",\r\n  \"phone\": \"83332222222\",\r\n  \"userStatus\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "выход пользователя из системы",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
+							"pm.test(\"пользователь имеет type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"пользователь имеет message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
 							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
 							"});"
 						],
@@ -478,6 +247,581 @@
 						{
 							"key": "username",
 							"value": "Genka"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "должен изменить данные пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
+							"    pm.expect(jsonData.message).to.eql(\"894307801\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 894307801,\r\n  \"username\": \"Genka\",\r\n  \"firstName\": \"Genadiy\",\r\n  \"lastName\": \"Ivanov\",\r\n  \"email\": \"Genadiy@rambler.ru\",\r\n  \"password\": \"1111\",\r\n  \"phone\": \"84442222222\",\r\n  \"userStatus\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Genka",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Genka"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен войти в систему при неверном име пользователя/пароль",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/%",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"%"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаление пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"Genka\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Genka",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Genka"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен находить не существующего пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные code, tupe, message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(1);\r",
+							"    pm.expect(jsonData.type).to.eql(\"error\");    \r",
+							"    pm.expect(jsonData.message).to.eql(\"User not found\");      \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Oleg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен находить пользователя при некоректно введенном имени",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/%",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"%"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен находить пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные code, tupe, message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(1);\r",
+							"    pm.expect(jsonData.type).to.eql(\"error\");    \r",
+							"    pm.expect(jsonData.message).to.eql(\"User not found\");      \r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Oleg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен войти в систему если пользователь не найден",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Olega",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Olega"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен удалять пользователя с неверно  предоставленной информацией",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/%",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"%"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен удалять ненайденного пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 404\", function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Oleg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен изменять данные пользователя при некорректно введенных данных для поиска пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 400\", function() {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/%",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"%"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "должен создавать список пользователей с заданным входным массивом",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"код ответа 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"пользователь имеет данные  type, message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"созданные пользователи имеют данные\", function () {\r",
+							"    var arr = pm.response.json()\r",
+							"\r",
+							"for(i = 0; i < arr.length; i++) {\r",
+							"    if (arr[i].id === 894307811) {\r",
+							"        pm.expect(arr[i].name).to.eql(\"Grisha\");    \r",
+							"    } \r",
+							"}  \r",
+							"\r",
+							"console.log(arr[i].id);\r",
+							"\r",
+							"for(i = 0; i < arr.length; i++) {\r",
+							"    if (arr[i].id === 894307822) {\r",
+							"        pm.expect(arr[i].name).to.eql(\"Artemiy\");    \r",
+							"    } \r",
+							"}  \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": 894307811,\r\n    \"username\": \"Grisha\",\r\n    \"firstName\": \"Grisha\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"email\": \"Grisha@rambler.ru\",\r\n    \"password\": \"0000\",\r\n    \"phone\": \"83332222222\",\r\n    \"userStatus\": 1\r\n  },\r\n    {\r\n    \"id\": 894307822,\r\n    \"username\": \"Artemiy\",\r\n    \"firstName\": \"Artemiy\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"email\": \"Artemiy@rambler.ru\",\r\n    \"password\": \"0000\",\r\n    \"phone\": \"83330000000\",\r\n    \"userStatus\": 1\r\n  }\r\n]\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/createWithArray",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"createWithArray"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаление двух пользователей (очистка данных)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Grisha?username=Artemiy&username=Grisha",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Grisha"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "Artemiy"
+						},
+						{
+							"key": "username",
+							"value": "Grisha"
 						}
 					]
 				}

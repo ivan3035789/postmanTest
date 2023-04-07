@@ -7,12 +7,23 @@
 	},
 	"item": [
 		{
-			"name": "создать пользователя",
+			"name": "должен создать пользователя",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"  \"id\": 0,\r",
+							"  \"username\": \"string\",\r",
+							"  \"firstName\": \"string\",\r",
+							"  \"lastName\": \"string\",\r",
+							"  \"email\": \"string\",\r",
+							"  \"password\": \"string\",\r",
+							"  \"phone\": \"string\",\r",
+							"  \"userStatus\": 0\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -24,6 +35,10 @@
 							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
 							"});\r",
 							"\r",
 							"pm.test(\"тело ответа имеет данные code, tupe, message\", function () {\r",
@@ -72,6 +87,17 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"  \"id\": 0,\r",
+							"  \"username\": \"string\",\r",
+							"  \"firstName\": \"string\",\r",
+							"  \"lastName\": \"string\",\r",
+							"  \"email\": \"string\",\r",
+							"  \"password\": \"string\",\r",
+							"  \"phone\": \"string\",\r",
+							"  \"userStatus\": 0\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -83,6 +109,10 @@
 							"pm.test(\"тело ответа имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
 							"});\r",
 							"\r",
 							"pm.test(\"пользователь имеет данные\", function () {\r",
@@ -144,9 +174,10 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет тип unknown \", function () {\r",
+							"pm.test(\"тело ответа имеет данные unknown \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
+							"    pm.expect(jsonData.message).to.eql(jsonData.message);\r",
 							"});\r",
 							"\r",
 							""
@@ -217,7 +248,7 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
 							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
@@ -260,6 +291,16 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"  \"id\": 0,\r",
+							"  \"username\": \"string\",\r",
+							"  \"firstName\": \"string\",\r",
+							"  \"lastName\": \"string\",\r",
+							"  \"email\": \"string\",\r",
+							"  \"password\": \"string\",\r",
+							"  \"phone\": \"string\",\r",
+							"  \"userStatus\": 0\r",
+							"}\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -273,7 +314,11 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
 							"    pm.expect(jsonData.message).to.eql(\"894307801\");\r",
@@ -353,7 +398,7 @@
 			"response": []
 		},
 		{
-			"name": "удаление пользователя",
+			"name": "должен удалиться пользователь",
 			"event": [
 				{
 					"listen": "test",
@@ -372,7 +417,7 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(\"Genka\");\r",
@@ -437,7 +482,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -447,7 +492,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Oleg"
+						"Olega123654"
 					]
 				}
 			},
@@ -537,7 +582,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"raw": "https://petstore.swagger.io/v2/user/",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -547,7 +592,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Oleg"
+						""
 					]
 				}
 			},
@@ -566,6 +611,17 @@
 							"\r",
 							"pm.test(\"код ответа 404\", function() {\r",
 							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.type).to.eql(\"error\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"User not found\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -576,7 +632,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Olega",
+					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -586,14 +642,14 @@
 					"path": [
 						"v2",
 						"user",
-						"Olega"
+						"Olega123654"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "не должен удалять пользователя с неверно  предоставленной информацией",
+			"name": "не должен удалять пользователя с некорректно указанным именем",
 			"event": [
 				{
 					"listen": "test",
@@ -655,7 +711,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Oleg",
+					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -665,7 +721,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Oleg"
+						"Olega123654"
 					]
 				}
 			},
@@ -718,6 +774,17 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"  \"id\": 0,\r",
+							"  \"username\": \"string\",\r",
+							"  \"firstName\": \"string\",\r",
+							"  \"lastName\": \"string\",\r",
+							"  \"email\": \"string\",\r",
+							"  \"password\": \"string\",\r",
+							"  \"phone\": \"string\",\r",
+							"  \"userStatus\": 0\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -731,7 +798,11 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет данные  type, message\", function () {\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные type, message\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(\"ok\");\r",
@@ -745,8 +816,6 @@
 							"        pm.expect(arr[i].name).to.eql(\"Grisha\");    \r",
 							"    } \r",
 							"}  \r",
-							"\r",
-							"console.log(arr[i].id);\r",
 							"\r",
 							"for(i = 0; i < arr.length; i++) {\r",
 							"    if (arr[i].id === 894307822) {\r",

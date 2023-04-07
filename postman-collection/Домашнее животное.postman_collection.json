@@ -10,9 +10,110 @@
 			"name": "должен добавиться питомец в магазин",
 			"event": [
 				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\r",
+							"    {\r",
+							"\t\"method\": \"POST\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": {\r",
+							"        \"id\": 894307801,\r",
+							"        \"username\": \"Genka\",\r",
+							"        \"firstName\": \"Genadiy\",\r",
+							"        \"lastName\": \"Ivanov\",\r",
+							"        \"email\": \"Genadiy@rambler.ru\",\r",
+							"        \"password\": \"0000\",\r",
+							"        \"phone\": \"83332222222\",\r",
+							"        \"userStatus\": 1\r",
+							"        },\r",
+							"\t\t\t\"options\": {\r",
+							"\t\t\t\t\"raw\": {\r",
+							"\t\t\t\t\t\"language\": \"json\"\r",
+							"\t\t\t\t\t\t}\r",
+							"\t\t\t\t\t}\r",
+							"\t\t\t\t},\r",
+							"\t            \"url\": {\r",
+							"\t\t            \"raw\": \"https://petstore.swagger.io/v2/user\",\r",
+							"\t\t            \"protocol\": \"https\",\r",
+							"\t        \"host\": [\r",
+							"\t\t        \"petstore\",\r",
+							"\t\t        \"swagger\",\r",
+							"\t\t        \"io\"\r",
+							"\t                ],\r",
+							"\t    \"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\"\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"    \"id\": \"89430780\",\r",
+							"    \"category\": {\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"cat\"\r",
+							"    },\r",
+							"    \"name\": \"crty\",\r",
+							"    \"photoUrls\": [\r",
+							"        \"string\"\r",
+							"    ],\r",
+							"    \"tags\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"name\": \"crty\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"status\": \"available\"\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -21,27 +122,22 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
 							"\r",
-							"pm.test(\"id питомца имеет номер 89430780\", function () {\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные id, name, category, status\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.id).to.eql(89430780);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет имя crty\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.name).to.eql(\"crty\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет категорию cat\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.category.name).to.eql(\"cat\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет категорию статус available\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.status).to.eql(\"available\");\r",
 							"});\r",
-							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -77,12 +173,31 @@
 			"response": []
 		},
 		{
-			"name": "найти петомца по id",
+			"name": "должен найти петомца по id",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"    \"id\": \"89430780\",\r",
+							"    \"category\": {\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"cat\"\r",
+							"    },\r",
+							"    \"name\": \"crty\",\r",
+							"    \"photoUrls\": [\r",
+							"        \"string\"\r",
+							"    ],\r",
+							"    \"tags\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"name\": \"crty\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"status\": \"available\"\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -91,28 +206,70 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"id питомца имеет номер 89430780\", function () {\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные id, name, category, status\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.id).to.eql(89430780);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет имя crty\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.name).to.eql(\"crty\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет категорию cat\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.category.name).to.eql(\"cat\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"питомец имеет категорию статус \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.status).to.eql(\"available\");\r",
 							"});\r",
 							"\r",
 							"\r",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -158,18 +315,46 @@
 			"response": []
 		},
 		{
-			"name": "узнать статус",
+			"name": "должен узнать статус питомца",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"    \"id\": \"89430780\",\r",
+							"    \"category\": {\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"cat\"\r",
+							"    },\r",
+							"    \"name\": \"crty\",\r",
+							"    \"photoUrls\": [\r",
+							"        \"string\"\r",
+							"    ],\r",
+							"    \"tags\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"name\": \"crty\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"status\": \"available\"\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"код ответа 200\", function() {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
 							"});\r",
 							"\r",
 							"pm.test(\"питомец имеет категорию статус available\", function () {\r",
@@ -186,6 +371,51 @@
 							"\r",
 							"\r",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -222,12 +452,31 @@
 			"response": []
 		},
 		{
-			"name": "обновление питомца",
+			"name": "должен изменять данные питомца",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
+							"let shema = {\r",
+							"    \"id\": \"89430780\",\r",
+							"    \"category\": {\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"cat\"\r",
+							"    },\r",
+							"    \"name\": \"crty\",\r",
+							"    \"photoUrls\": [\r",
+							"        \"string\"\r",
+							"    ],\r",
+							"    \"tags\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"name\": \"crty\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"status\": \"available\"\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -236,6 +485,14 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).not.to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"схема корректна\", function () {\r",
+							"    pm.response.to.have.jsonSchema(shema)\r",
+							"});\r",
 							"\r",
 							"pm.test(\"id питомца имеет номер 89430780\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
@@ -255,6 +512,51 @@
 							"pm.test(\"питомец имеет категорию статус \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.status).to.eql(\"sold\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -315,6 +617,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -357,10 +704,55 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"pm.test(\"тело ответа имеет данные unknown, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(\"something bad happened\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -410,6 +802,51 @@
 							"    pm.response.to.have.status(404);\r",
 							"});\r",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -475,10 +912,55 @@
 							"    pm.expect(jsonData).not.to.be.empty;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"пользователь имеет type, message \", function () {\r",
+							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(\"bad input\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -528,6 +1010,51 @@
 							"    pm.response.to.have.status(400);\r",
 							"});\r",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -583,6 +1110,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -624,6 +1196,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -657,7 +1274,7 @@
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"ответ 200\", function() {\r",
+							"pm.test(\"ответ 500\", function() {\r",
 							"    pm.response.to.have.status(500);\r",
 							"});\r",
 							"\r",
@@ -670,6 +1287,51 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(\"something bad happened\");    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -732,6 +1394,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -776,6 +1483,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -814,6 +1566,51 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"body\": {\r",
+							"\t\"mode\": \"raw\",\r",
+							"\t\"raw\": \"\",\r",
+							"\t\"options\": {\r",
+							"\t\t\"raw\": {\r",
+							"\t\t    \"language\": \"json\"\r",
+							"\t\t\t}\r",
+							"\t\t}\r",
+							"\t},\r",
+							"\t\"url\": {\r",
+							"\t\t\"raw\": \"https://petstore.swagger.io/v2/user/login?username=Genka&password=0000\",\r",
+							"\t\t\"protocol\": \"https\",\r",
+							"\t\t\t\"host\": [\r",
+							"\t\t\t\t\"petstore\",\r",
+							"\t\t\t\t\"swagger\",\r",
+							"\t\t\t\t\"io\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"path\": [\r",
+							"\t\t\t\t\"v2\",\r",
+							"\t\t\t\t\"user\",\r",
+							"\t\t\t\t\"login\"\r",
+							"\t\t\t\t\t],\r",
+							"\t\t\t\"query\": [\r",
+							"\t\t\t\t{\r",
+							"\t\t\t\t\t\"key\": \"username\",\r",
+							"\t\t\t\t\t\"value\": \"Genka\"\r",
+							"\t\t\t\t},\r",
+							"\t\t\t{\r",
+							"\t\t\t\t\"key\": \"password\",\r",
+							"\t\t\t\t\"value\": \"0000\"\r",
+							"\t\t\t}\r",
+							"\t\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -831,6 +1628,396 @@
 						"v2",
 						"pet",
 						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен добавляться питомец если пользователь не авторизован",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": \"https://petstore.swagger.io/v2/user/logout?username=Genka\",\r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\t\"logout\"\r",
+							"\t],\r",
+							"\t\"query\": [\r",
+							"\t{\r",
+							"\t\t\"key\": \"username\",\r",
+							"\t\t\"value\": \"Genka\"\r",
+							"\t}\r",
+							"\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"код ответа 304\", function() {\r",
+							"    pm.response.to.have.status(304);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа не имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 89430780,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"cat\"\r\n  },\r\n  \"name\": \"crty\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"crty\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен найти петомца по id если пользователь не авторизован",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": \"https://petstore.swagger.io/v2/user/logout?username=Genka\",\r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\t\"logout\"\r",
+							"\t],\r",
+							"\t\"query\": [\r",
+							"\t{\r",
+							"\t\t\"key\": \"username\",\r",
+							"\t\t\"value\": \"Genka\"\r",
+							"\t}\r",
+							"\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"код ответа 304\", function() {\r",
+							"    pm.response.to.have.status(304);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.empty;\r",
+							"});\r",
+							"// дописать тело ответа от сервера пользователь не авторизован"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/89430780",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"89430780"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен узнать статус если пользователь не авторизован",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": \"https://petstore.swagger.io/v2/user/logout?username=Genka\",\r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\t\"logout\"\r",
+							"\t],\r",
+							"\t\"query\": [\r",
+							"\t{\r",
+							"\t\t\"key\": \"username\",\r",
+							"\t\t\"value\": \"Genka\"\r",
+							"\t}\r",
+							"\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"код ответа 304\", function() {\r",
+							"    pm.response.to.have.status(304);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа не имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.empty;\r",
+							"});\r",
+							"// дописать тело ответа от сервера пользователь не авторизован"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available&index",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						},
+						{
+							"key": "index",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен изменять данные питомца если пользователь не авторизован",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": \"https://petstore.swagger.io/v2/user/logout?username=Genka\",\r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\t\"logout\"\r",
+							"\t],\r",
+							"\t\"query\": [\r",
+							"\t{\r",
+							"\t\t\"key\": \"username\",\r",
+							"\t\t\"value\": \"Genka\"\r",
+							"\t}\r",
+							"\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"код ответа 304\", function() {\r",
+							"    pm.response.to.have.status(304);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа не имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.empty;\r",
+							"});\r",
+							"// дописать тело ответа от сервера пользователь не авторизован"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 89430780,\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"cat\"\r\n  },\r\n  \"name\": \"rufus\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"rufus\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "не должен удалить питомца если пользователь не авторизован",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"GET\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": \"https://petstore.swagger.io/v2/user/logout?username=Genka\",\r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\t\"logout\"\r",
+							"\t],\r",
+							"\t\"query\": [\r",
+							"\t{\r",
+							"\t\t\"key\": \"username\",\r",
+							"\t\t\"value\": \"Genka\"\r",
+							"\t}\r",
+							"\t]\r",
+							"\t}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"код ответа 304\", function() {\r",
+							"    pm.response.to.have.status(304);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"тело ответа не имеет данные\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.empty;\r",
+							"});\r",
+							"// дописать тело ответа от сервера пользователь не авторизован"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/89430780",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"89430780"
 					]
 				}
 			},

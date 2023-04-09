@@ -239,8 +239,6 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"\r",
-							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",

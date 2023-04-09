@@ -24,6 +24,7 @@
 							"  \"userStatus\": 0\r",
 							"}\r",
 							"\r",
+							"\r",
 							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
@@ -44,11 +45,9 @@
 							"pm.test(\"тело ответа имеет данные type, message\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"    pm.expect(jsonData.message).to.eql(\"894307801\");\r",
-							"});\r",
+							"    pm.expect(jsonData.message).to.eql(pm.globals.get(\"idUser\"));\r",
 							"\r",
-							"\r",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -59,7 +58,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\r\n    \"id\": 894307801,\r\n    \"username\": \"Genka\",\r\n    \"firstName\": \"Genadiy\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"email\": \"Genadiy@rambler.ru\",\r\n    \"password\": \"0000\",\r\n    \"phone\": \"83332222222\",\r\n    \"userStatus\": 1\r\n  }",
+					"raw": "  {\r\n    \"id\": {{idUser}},\r\n    \"username\": \"{{username}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"userStatus\": {{userStatus}}\r\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -119,14 +118,17 @@
 							"\r",
 							"pm.test(\"пользователь имеет данные\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.id).to.eql(894307801);\r",
-							"    pm.expect(jsonData.username).to.eql(\"Genka\");\r",
-							"    pm.expect(jsonData.firstName).to.eql(\"Genadiy\");\r",
-							"    pm.expect(jsonData.lastName).to.eql(\"Ivanov\");\r",
-							"    pm.expect(jsonData.email).to.eql(\"Genadiy@rambler.ru\");\r",
-							"    pm.expect(jsonData.password).to.eql(\"0000\");\r",
-							"    pm.expect(jsonData.phone).to.eql(\"83332222222\");\r",
-							"    pm.expect(jsonData.userStatus).to.eql(1);\r",
+							"    let id = pm.globals.get(\"idUser\");\r",
+							"    let status = pm.globals.get(\"userStatus\")\r",
+							"\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(id));\r",
+							"    pm.expect(jsonData.username).to.eql(pm.globals.get(\"username\"));\r",
+							"    pm.expect(jsonData.firstName).to.eql(pm.globals.get(\"firstName\"));\r",
+							"    pm.expect(jsonData.lastName).to.eql(pm.globals.get(\"lastName\"));\r",
+							"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
+							"    pm.expect(jsonData.password).to.eql(pm.globals.get(\"password\"));\r",
+							"    pm.expect(jsonData.phone).to.eql(pm.globals.get(\"phone\"));\r",
+							"    pm.expect(jsonData.userStatus).to.eql(parseInt(status));\r",
 							"});\r",
 							"\r",
 							"\r",
@@ -140,7 +142,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Genka",
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -150,7 +152,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Genka"
+						"{{username}}"
 					]
 				}
 			},
@@ -264,7 +266,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/logout?username=Genka",
+					"raw": "https://petstore.swagger.io/v2/user/logout?username={{username}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -279,7 +281,7 @@
 					"query": [
 						{
 							"key": "username",
-							"value": "Genka"
+							"value": "{{username}}"
 						}
 					]
 				}
@@ -322,8 +324,10 @@
 							"\r",
 							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
+							"    let id = pm.globals.get(\"idUser\");\r",
+							"\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");    \r",
-							"    pm.expect(jsonData.message).to.eql(\"894307801\");\r",
+							"    pm.expect(jsonData.message).to.eql(id);\r",
 							"});\r",
 							""
 						],
@@ -336,7 +340,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 894307801,\r\n  \"username\": \"Genka\",\r\n  \"firstName\": \"Genadiy\",\r\n  \"lastName\": \"Ivanov\",\r\n  \"email\": \"Genadiy@rambler.ru\",\r\n  \"password\": \"1111\",\r\n  \"phone\": \"84442222222\",\r\n  \"userStatus\": 1\r\n}\r\n",
+					"raw": "{\r\n  \"id\": {{idUser}},\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{updatePassword}}\",\r\n  \"phone\": \"{{updatePhone}}\",\r\n  \"userStatus\": {{userStatus}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -344,7 +348,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Genka",
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -354,7 +358,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Genka"
+						"{{username}}"
 					]
 				}
 			},
@@ -383,7 +387,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/%",
+					"raw": "https://petstore.swagger.io/v2/user/login?username={{username}}&password={{password}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -393,7 +397,17 @@
 					"path": [
 						"v2",
 						"user",
-						"%"
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}"
+						}
 					]
 				}
 			},
@@ -422,7 +436,7 @@
 							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"    pm.expect(jsonData.message).to.eql(\"Genka\");\r",
+							"    pm.expect(jsonData.message).to.eql(pm.globals.get(\"username\"));\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -433,7 +447,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Genka",
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -443,7 +457,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Genka"
+						"{{username}}"
 					]
 				}
 			},
@@ -484,7 +498,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
+					"raw": "https://petstore.swagger.io/v2/user/{{nonExistentUser}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -494,7 +508,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Olega123654"
+						"{{nonExistentUser}}"
 					]
 				}
 			},
@@ -634,7 +648,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
+					"raw": "https://petstore.swagger.io/v2/user/{{nonExistentUser}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -644,7 +658,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Olega123654"
+						"{{nonExistentUser}}"
 					]
 				}
 			},
@@ -713,7 +727,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/Olega123654",
+					"raw": "https://petstore.swagger.io/v2/user/{{nonExistentUser}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -723,7 +737,7 @@
 					"path": [
 						"v2",
 						"user",
-						"Olega123654"
+						"{{nonExistentUser}}"
 					]
 				}
 			},

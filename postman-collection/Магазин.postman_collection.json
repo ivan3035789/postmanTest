@@ -1359,6 +1359,22 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "должен меняться статус на sold (продано)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "должен меняться статус на pending (рассматриваемый)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }

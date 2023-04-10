@@ -1,0 +1,153 @@
+{
+	"id": "37fe5722-a7c2-4b4c-8975-d545da9daa65",
+	"values": [
+		{
+			"key": "idUser",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "firstName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lastName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "email",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "phone",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userStatus",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "idOfTheCreatedPet",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "idCategory",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "nameCategory",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "nameOfTheCreatedPet",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "idTags",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "nameTags",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "statusTags",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "updatePassword",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "updatePhone",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "nonExistentUser",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "updateNamePet",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "updateTagsName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "updateStatys",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "quantity",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "exceedingTheNumber",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "shipDate",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2023-04-10T14:01:10.330Z",
+	"_postman_exported_using": "Postman/10.12.11"
+}

@@ -1,102 +1,11 @@
 {
 	"info": {
 		"_postman_id": "80e89b95-c6c3-4261-b688-ef2fd5f48042",
-		"name": "Валидация",
+		"name": "создание питомца позитивные сценарии",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15277162"
 	},
 	"item": [
-		{
-			"name": "создание пользователя",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let shema = {\r",
-							"  \"id\": 0,\r",
-							"  \"username\": \"string\",\r",
-							"  \"firstName\": \"string\",\r",
-							"  \"lastName\": \"string\",\r",
-							"  \"email\": \"string\",\r",
-							"  \"password\": \"string\",\r",
-							"  \"phone\": \"string\",\r",
-							"  \"userStatus\": 0\r",
-							"}\r",
-							"\r",
-							"\r",
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"тело ответа имеет данные\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).not.to.be.empty;\r",
-							"});\r",
-							"\r",
-							"pm.test(\"схема корректна\", function () {\r",
-							"    pm.response.to.have.jsonSchema(shema)\r",
-							"});\r",
-							"\r",
-							"pm.test(\"тело ответа имеет данные type, message\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"    pm.expect(jsonData.message).to.eql(pm.globals.get(\"idUser\"));\r",
-							"\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "  {\r\n    \"id\": {{idUser}},\r\n    \"username\": \"{{username}}\",\r\n    \"firstName\": \"{{firstName}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"userStatus\": {{userStatus}}\r\n  }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "создание питомца",
 			"event": [
@@ -182,7 +91,7 @@
 			"response": []
 		},
 		{
-			"name": "очистка данных домашнего питомца",
+			"name": "очистка данных",
 			"event": [
 				{
 					"listen": "test",
@@ -227,57 +136,6 @@
 						"v2",
 						"pet",
 						"{{idOfTheCreatedPet}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "очистка данных о пользователе",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Время отклика составляет менее 500 мс\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"код ответа 200\", function() {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"тело ответа имеет данные\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).not.to.be.empty;\r",
-							"});\r",
-							"\r",
-							"pm.test(\"тело ответа имеет данные type, message \", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
-							"    pm.expect(jsonData.message).to.eql(pm.globals.get(\"user\"));\r",
-							"\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
-					"protocol": "https",
-					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"user",
-						"{{username}}"
 					]
 				}
 			},

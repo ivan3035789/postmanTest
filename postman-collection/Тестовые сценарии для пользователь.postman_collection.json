@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "9e7361d6-0c40-45f6-9228-03bf71868852",
-		"name": "Пользователь",
+		"name": "Тестовые сценарии для пользователь",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15277162"
 	},
@@ -47,6 +47,32 @@
 							"    pm.expect(jsonData.type).to.eql(\"unknown\");\r",
 							"    pm.expect(jsonData.message).to.eql(pm.globals.get(\"idUser\"));\r",
 							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"\t\"method\": \"DELETE\",\r",
+							"\t\"header\": [],\r",
+							"\t\"url\": {\r",
+							"\t\"raw\": `\"https://petstore.swagger.io/v2/user/${pm.globals.get(\"username\")}\"`, \r",
+							"\t\"protocol\": \"https\",\r",
+							"\t\"host\": [\r",
+							"\t\t\"petstore\",\r",
+							"\t\t\"swagger\",\r",
+							"\t\t\"io\"\r",
+							"\t],\r",
+							"\t\"path\": [\r",
+							"\t\t\"v2\",\r",
+							"\t\t\"user\",\r",
+							"\t\tpm.globals.get(\"username\")\r",
+							"\t]\r",
+							"\t}\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -387,7 +413,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/login?username={{username}}&password={{password}}",
+					"raw": "https://petstore.swagger.io/v2/user/login?username={{invalidUserName}}&password={{updatePassword}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -402,11 +428,11 @@
 					"query": [
 						{
 							"key": "username",
-							"value": "{{username}}"
+							"value": "{{invalidUserName}}"
 						},
 						{
 							"key": "password",
-							"value": "{{password}}"
+							"value": "{{updatePassword}}"
 						}
 					]
 				}
@@ -598,7 +624,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/",
+					"raw": "https://petstore.swagger.io/v2/user/{{nonExistentUser}}",
 					"protocol": "https",
 					"host": [
 						"petstore",
@@ -608,7 +634,7 @@
 					"path": [
 						"v2",
 						"user",
-						""
+						"{{nonExistentUser}}"
 					]
 				}
 			},

@@ -1,0 +1,29 @@
+[
+ {
+  "idOfTheCreatedPet": 89430780,
+  "idCategory": 1,
+  "nameCategory": "cat",
+  "nameOfTheCreatedPet": "crty",
+  "idTags": 1,
+  "nameTags": "crty",
+  "statusTags": "available"
+ },
+ {
+  "idOfTheCreatedPet": 65912,
+  "idCategory": 2,
+  "nameCategory": "dog",
+  "nameOfTheCreatedPet": "ser1",
+  "idTags": 2,
+  "nameTags": "ser1",
+  "statusTags": "available"
+ },
+ {
+  "idOfTheCreatedPet": 989564,
+  "idCategory": 3,
+  "nameCategory": "bird",
+  "nameOfTheCreatedPet": "CFC2",
+  "idTags": 3,
+  "nameTags": "CFC2",
+  "statusTags": "available "
+ }
+]

@@ -3,151 +3,157 @@
 	"values": [
 		{
 			"key": "idUser",
-			"value": "",
+			"value": "894307801",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "username",
-			"value": "",
+			"value": "Genka",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "firstName",
-			"value": "",
+			"value": "Genadiy",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "lastName",
-			"value": "",
+			"value": "Ivanov",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "email",
-			"value": "",
+			"value": "Genadiy@rambler.ru",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "password",
-			"value": "",
+			"value": "0000",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "phone",
-			"value": "",
+			"value": "83332222222",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "userStatus",
-			"value": "",
+			"value": "1",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "idOfTheCreatedPet",
-			"value": "",
+			"value": "89430780",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "idCategory",
-			"value": "",
+			"value": "1",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "nameCategory",
-			"value": "",
+			"value": "cat",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "nameOfTheCreatedPet",
-			"value": "",
+			"value": "crty",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "idTags",
-			"value": "",
+			"value": "1",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "nameTags",
-			"value": "",
+			"value": "crty",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "statusTags",
-			"value": "",
+			"value": "available",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "updatePassword",
-			"value": "",
+			"value": "1111",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "updatePhone",
-			"value": "",
+			"value": "84442222222",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "nonExistentUser",
-			"value": "",
+			"value": "Olega123654",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "updateNamePet",
-			"value": "",
+			"value": "rufus",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "updateTagsName",
-			"value": "",
+			"value": "rufus",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "updateStatys",
-			"value": "",
+			"value": "sold",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "quantity",
-			"value": "",
+			"value": "1",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "exceedingTheNumber",
-			"value": "",
+			"value": "100",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "shipDate",
-			"value": "",
+			"value": "2023-04-04T09:28:18.115+0000",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidUserName",
+			"value": "fvhbjbkrjhbjkbgjjbjk",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"name": "Globals",
 	"_postman_variable_scope": "globals",
-	"_postman_exported_at": "2023-04-10T14:01:10.330Z",
+	"_postman_exported_at": "2023-05-07T13:28:59.293Z",
 	"_postman_exported_using": "Postman/10.12.11"
 }
